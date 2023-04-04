@@ -1,5 +1,6 @@
+
 const gameBoard = document.getElementById("game-board");
-const startGameButton = document.getElementById("start-game"); 
+const startGameButton = document.getElementById("start-game");
 let gridSize = 18;
 
 let cardObjects = [];
@@ -7,19 +8,50 @@ let numberOfPairs = 9;
 startGameButton.addEventListener("click", startGame);
 
 async function fetchCards(numberOfPairs) {
-    try {
-        const response = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
-        const data = await response.json();
-
-        const cardsResponse = await fetch(`https://deckofcardsapi.com/api/deck/${data.deck_id}/draw/?count=${numberOfPairs}`);
-        const cardsData = await cardsResponse.json();
-        cardObjects = cardsData.cards;
-        cardObjects = [...cardObjects, ...cardObjects];
-        cardObjects = shuffleArray(cardObjects);
-        createGameBoard();
-    } catch (error) {
-        console.error("Error fetching cards:", error);
+  const cardDeckSelect = document.getElementById("cardDeck");
+    const selectedCardDeck = cardDeckSelect.value;
+    
+  try {
+    if (selectedCardDeck === "standard") {
+      const response = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
+      const data = await response.json();
+      const cardsResponse = await fetch(`https://deckofcardsapi.com/api/deck/${data.deck_id}/draw/?count=${numberOfPairs}`);
+      const cardsData = await cardsResponse.json();
+      cardObjects = cardsData.cards;
+    } else if (selectedCardDeck === "magic") {
+      const response = await fetch("https://api.magicthegathering.io/v1/cards?contains=imageUrl");
+      const data = await response.json();
+      const allCards = data.cards.filter(card => card.imageUrl);
+      cardObjects = getRandomCards(allCards, numberOfPairs).map(card => ({
+        code: card.id,
+        image: card.imageUrl
+      }));
+    } else if (selectedCardDeck === "pokemon") {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${numberOfPairs}`);
+      const data = await response.json();
+      const pokemons = data.results;
+      const pokemonDetails = await Promise.all(
+        pokemons.map(async (pokemon) => {
+          const detailResponse = await fetch(pokemon.url);
+          return detailResponse.json();
+        })
+      );
+      cardObjects = pokemonDetails.map((pokemon) => ({
+        code: pokemon.id,
+        image: pokemon.sprites.front_default,
+      }));
     }
+    cardObjects = [...cardObjects, ...cardObjects];
+    cardObjects = shuffleArray(cardObjects);
+    createGameBoard();
+  } catch (error) {
+    console.error("Error fetching cards:", error);
+  }
+}
+
+function getRandomCards(cards, count) {
+  const shuffledCards = shuffleArray(cards);
+  return shuffledCards.slice(0, count);
 }
 
 function shuffleArray(array) {
@@ -34,6 +66,18 @@ function createGameBoard() {
     // Clear the game board before adding cards
     gameBoard.innerHTML = '';
 
+     const cardDeckSelect = document.getElementById("cardDeck");
+    const selectedCardDeck = cardDeckSelect.value;
+    let cardImageBackUrl;
+
+    if (selectedCardDeck === "magic") {
+      cardImageBackUrl = "https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg";
+    } else if (selectedCardDeck === "pokemon") {
+      cardImageBackUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/4f7705ec-8c49-4eed-a56e-c21f3985254c/dah43cy-a8e121cb-934a-40f6-97c7-fa2d77130dd5.png/v1/fill/w_1024,h_1420,strp/pokemon_card_backside_in_high_resolution_by_atomicmonkeytcg_dah43cy-fullview.png";
+    } else {
+      cardImageBackUrl = "http://4.bp.blogspot.com/_1AgA_BSRr40/TI_YtyvDrnI/AAAAAAAAAkA/MLMj23dgqtM/s1600/hoyleback.jpg";
+    }
+
     for (let i = 0; i < gridSize; i++) {
         const card = document.createElement("div");
         card.classList.add("card");
@@ -45,7 +89,7 @@ function createGameBoard() {
         cardImageFront.style.display = "none";
 
         const cardImageBack = document.createElement("img");
-        cardImageBack.src = "http://4.bp.blogspot.com/_1AgA_BSRr40/TI_YtyvDrnI/AAAAAAAAAkA/MLMj23dgqtM/s1600/hoyleback.jpg";
+        cardImageBack.src = cardImageBackUrl;
         cardImageBack.classList.add("card-image-back");
 
         card.appendChild(cardImageFront);
@@ -63,10 +107,14 @@ let score = 0;
 
 function handleCardClick(event) {
     if (!canFlipCard) return;
-
     const card = event.currentTarget;
     const cardImageFront = card.querySelector(".card-image-front");
     const cardImageBack = card.querySelector(".card-image-back");
+
+    // Check if the card is already flipped
+    if (cardImageFront.style.display === "block") {
+        return;
+    }
 
     cardImageFront.style.display = "block";
     cardImageBack.style.display = "none";
@@ -96,7 +144,7 @@ function checkForMatch() {
             secondCard.style.visibility = "hidden";
             firstCard.removeEventListener("click", handleCardClick);
             secondCard.removeEventListener("click", handleCardClick);
-            score++;
+            score += 2; // Increase score by 2 for correct match
             matchedPairs++;
             resetCards();
             checkForGameOver();
@@ -109,7 +157,7 @@ function checkForMatch() {
             secondCardImageBack.style.display = "block";
             resetCards();
         }, 1000);
-        score--;
+        score--; // Decrease score by 1 for incorrect match
     }
 }
 
@@ -128,7 +176,6 @@ function checkForGameOver() {
         }
     }
 
-
 function startGame() {
     const numOfCardsInput = document.getElementById("numOfCards");
     const numOfCards = parseInt(numOfCardsInput.value);
@@ -137,7 +184,6 @@ function startGame() {
         alert("Please enter a valid even number (minimum 4)");
         return;
     }
-
     gridSize = numOfCards;
     numberOfPairs = gridSize / 2;
     matchedPairs = 0;

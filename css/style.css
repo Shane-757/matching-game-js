@@ -3,16 +3,66 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('https://media.istockphoto.com/photos/cards-on-green-felt-casino-table-background-picture-id1125958849?k=6&m=1125958849&s=170667a&w=0&h=JBdYf-BkLbMRoRxP9oUF-u4JcQA1vqhpFK5yiiBSbog=');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-color: #08661c;
+    font-family: cursive;
+    font-weight: 400;
+    color: rgb(184, 13, 13)
+    }
+
+.title{
+    text-align: center;
+    background-image: url('https://www.africabusinessclassroom.com/wp-content/uploads/2017/07/a_Gambling.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 100%;
+    
 }
 
 h1 {
     margin-bottom: 1rem;
+}
+h2 { 
+    margin : 0 auto;}
+
+p {
+    margin: 0 0 20px 0;
+    text-align: center;}
+
+#game-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+#start-game {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+#numOfCards{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
 #game-board {
     display: flex;
     flex-wrap: wrap;
     width: 800px;
+    justify-content: center;
+}
+ 
+#cardDeck{
+    margin-top: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
 .card {
@@ -28,16 +78,32 @@ h1 {
     margin: 5px;
     border-radius: 5px;
     position: relative;
-    
-        }
+}
 
-.card-image-front {
+.card-image-front,
+.card-image-back {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.card-image-back{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+
+
+/* Tablet view */
+@media (max-width: 768px) {
+    #game-board {
+        width: 600px;
     }
+
+    h1{
+        text-align: center;
+    }
+}
+
+/* Mobile view */
+@media (max-width: 480px) {
+    #game-board {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+}
