@@ -97,7 +97,67 @@ p {
     object-fit: cover;
 }
 
+button#start-game {
+    background-color: #007bff;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
 
+button#start-game:hover {
+    background-color: #0056b3;
+}
+
+.dancing-card {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: dancing 1s infinite alternate;
+}
+
+.dancing-card img {
+    width: 300px;
+    height: auto;
+}
+
+#discard-pile {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 100px;
+    height: 150px;
+    perspective: 500px;
+}
+
+.discard-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+
+@keyframes dancing {
+    0% {
+        transform: translateY(0) translateX(-50%);
+    }
+
+    50% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+
+    100% {
+        transform: translateY(0) translateX(-50%);
+    }
+}
+
+/* Desktop view */
+@media (min-width: 992px) {
+    #game-board {
+        width: 800px;
+    }
+}
 
 /* Tablet view */
 @media (max-width: 768px) {

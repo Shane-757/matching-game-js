@@ -139,7 +139,8 @@ function checkForMatch() {
     const secondCardImageBack = secondCard.querySelector(".card-image-back");
 
     if (firstCard.dataset.value === secondCard.dataset.value) {
-        setTimeout(() => {
+      setTimeout(() => {
+           addCardsToDiscardPile(firstCard, secondCard);
             firstCard.style.visibility = "hidden";
             secondCard.style.visibility = "hidden";
             firstCard.removeEventListener("click", handleCardClick);
@@ -194,4 +195,53 @@ function startGame() {
     gameBoard.innerHTML = '';
 
     fetchCards(numberOfPairs);
+}
+
+function addCardsToDiscardPile(card1, card2) {
+  const discardPile = document.getElementById("discard-pile");
+
+  // Create discard cards with the card back image
+  const cardBackUrl = getCardBackImageUrl();
+  const discardCard1 = createDiscardCard(cardBackUrl);
+  const discardCard2 = createDiscardCard(cardBackUrl);
+
+  // Add a rotation and offset to give the appearance of stacking
+  const rotation = Math.random() * 5 - 2.5; 
+  const offsetX = Math.random() * 4 - 2; 
+  const offsetY = Math.random() * 4 - 2; 
+  discardCard1.style.transform += ` rotate(${rotation}deg) translate(${offsetX}px, ${offsetY}px)`;
+  discardCard2.style.transform += ` rotate(${-rotation}deg) translate(${offsetX}px, ${offsetY}px)`;
+
+  // Add the discard cards to the discard pile
+  discardPile.appendChild(discardCard1);
+  discardPile.appendChild(discardCard2);
+}
+
+function createDiscardCard(cardBackUrl) {
+  const discardCard = document.createElement("div");
+  discardCard.classList.add("discard-card");
+
+  const cardImageBack = document.createElement("img");
+  cardImageBack.src = cardBackUrl;
+  cardImageBack.style.width = "100%";
+  cardImageBack.style.height = "100%";
+
+  discardCard.appendChild(cardImageBack);
+  return discardCard;
+}
+
+function getCardBackImageUrl() {
+  const cardDeckSelect = document.getElementById("cardDeck");
+  const selectedCardDeck = cardDeckSelect.value;
+  let cardImageBackUrl;
+
+  if (selectedCardDeck === "magic") {
+    cardImageBackUrl = "https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg";
+  } else if (selectedCardDeck === "pokemon") {
+    cardImageBackUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/4f7705ec-8c49-4eed-a56e-c21f3985254c/dah43cy-a8e121cb-934a-40f6-97c7-fa2d77130dd5.png/v1/fill/w_1024,h_1420,strp/pokemon_card_backside_in_high_resolution_by_atomicmonkeytcg_dah43cy-fullview.png";
+  } else {
+    cardImageBackUrl = "http://4.bp.blogspot.com/_1AgA_BSRr40/TI_YtyvDrnI/AAAAAAAAAkA/MLMj23dgqtM/s1600/hoyleback.jpg";
+  }
+
+  return cardImageBackUrl;
 }
