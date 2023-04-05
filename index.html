@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="title">
-    <h1>Memory Matching Game</h1>
-    <label for="numOfCards">Pick the Number of Cards:</label>
+    <h1 class="titleName">Memory Matching Game</h1>
     </div>
+    <label for="numOfCards">Pick the Number of Cards:</label>
     <input type="number" id="numOfCards" min="4" step="2">
     <label for="cardDeck">Choose a card deck:</label>
     <select id="cardDeck">
@@ -32,6 +32,7 @@
         another turn.<br>
         >The game continues until all pairs of cards have been matched.</p>
     <div id="game-container">
+    <script src="notiflix.js"></script>
     <script src="js/index.js" type="module"></script>
 </body>
 </html>

@@ -168,20 +168,22 @@ function resetCards() {
     }
 
 function checkForGameOver() {
-        if (matchedPairs === numberOfPairs) {
+    if (matchedPairs === numberOfPairs) {
+        setTimeout(() => {
+             Notiflix.Notify.success(`Game Over! Your score: ${score}`);
             setTimeout(() => {
-                alert(`Game Over! Your score: ${score}`);
                 location.reload();
-            }, 500);
-        }
+            }, 2500);
+        }, 500);
     }
+}
 
 function startGame() {
     const numOfCardsInput = document.getElementById("numOfCards");
     const numOfCards = parseInt(numOfCardsInput.value);
 
     if (isNaN(numOfCards) || numOfCards < 4 || numOfCards % 2 !== 0) {
-        alert("Please enter a valid even number (minimum 4)");
+        Notiflix.Notify.failure("Please enter a valid even number (minimum 4)");
         return;
     }
     gridSize = numOfCards;

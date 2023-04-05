@@ -10,7 +10,7 @@ body {
         background-color: #08661c;
     font-family: cursive;
     font-weight: 400;
-    color: rgb(184, 13, 13)
+    color: rgb(8, 8, 8)
     }
 
 .title{
@@ -18,8 +18,18 @@ body {
     background-image: url('https://www.africabusinessclassroom.com/wp-content/uploads/2017/07/a_Gambling.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
-    border-radius: 100%;
+    border-radius: 10%;
     
+}
+
+.titleName{
+    font-size: 50px;
+    color: rgb(8, 8, 8);
+    text-shadow: 2px 2px 2px #000000;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: cursive;
 }
 
 h1 {
@@ -86,6 +96,7 @@ p {
     height: 100%;
     object-fit: cover;
 }
+
 
 
 /* Tablet view */
