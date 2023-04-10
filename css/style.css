@@ -206,29 +206,3 @@ button#start-game:hover {
 
 }
 
-.notiflix-notify-container {
-    position: fixed;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 1000;
-}
-
-@media (min-width: 768px) {
-    .notiflix-notify-container {
-        justify-content: flex-end;
-        padding-right: 10px;
-    }
-}
-
-.notiflix-notify-wrapper {
-    margin-top: 10px;
-}
-
-@media (min-width: 768px) {
-    .notiflix-notify-wrapper {
-        margin-top: 0;
-        margin-bottom: 10px;
-    }
-}

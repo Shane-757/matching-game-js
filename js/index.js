@@ -1,20 +1,10 @@
-
-
 const gameBoard = document.getElementById("game-board");
 const startGameButton = document.getElementById("start-game");
 let gridSize = 18;
-
 let cardObjects = [];
 let numberOfPairs = 9;
 startGameButton.addEventListener("click", startGame);
 
-function showNotification(type, message) {
-  if (type === 'success') {
-    Notiflix.Notify.success(message);
-  } else if (type === 'failure') {
-    Notiflix.Notify.failure(message);
-  }
-}
 
 async function fetchCards(numberOfPairs) {
   const cardDeckSelect = document.getElementById("cardDeck");
@@ -180,7 +170,7 @@ function resetCards() {
 function checkForGameOver() {
     if (matchedPairs === numberOfPairs) {
         setTimeout(() => {
-             showNotification('success', `Game Over! Your score: ${score}`);
+             Notiflix.Notify.success(`Game Over! Your score: ${score}`);
             setTimeout(() => {
                 location.reload();
             }, 2500);
@@ -193,7 +183,7 @@ function startGame() {
     const numOfCards = parseInt(numOfCardsInput.value);
 
     if (isNaN(numOfCards) || numOfCards < 4 || numOfCards % 2 !== 0) {
-        showNotification('failure', 'Please enter a valid even number (minimum 4)');
+        Notiflix.Notify.failure('Please enter a valid even number (minimum 4)');
         return;
     }
     gridSize = numOfCards;
