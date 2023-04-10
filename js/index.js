@@ -1,19 +1,4 @@
-function updateNotiflixPosition() {
-  const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-  if (screenWidth < 768) {
-    Notiflix.Notify.init({
-      position: 'top-center',
-    });
-  } else {
-    Notiflix.Notify.init({
-      position: 'right-bottom', // or any other position you prefer for larger screens
-    });
-  }
-}
-
-updateNotiflixPosition();
-window.addEventListener('resize', updateNotiflixPosition);
 
 const gameBoard = document.getElementById("game-board");
 const startGameButton = document.getElementById("start-game");
@@ -22,6 +7,14 @@ let gridSize = 18;
 let cardObjects = [];
 let numberOfPairs = 9;
 startGameButton.addEventListener("click", startGame);
+
+function showNotification(type, message) {
+  if (type === 'success') {
+    Notiflix.Notify.success(message);
+  } else if (type === 'failure') {
+    Notiflix.Notify.failure(message);
+  }
+}
 
 async function fetchCards(numberOfPairs) {
   const cardDeckSelect = document.getElementById("cardDeck");
@@ -187,7 +180,7 @@ function resetCards() {
 function checkForGameOver() {
     if (matchedPairs === numberOfPairs) {
         setTimeout(() => {
-             Notiflix.Notify.success(`Game Over! Your score: ${score}`);
+             showNotification('success', `Game Over! Your score: ${score}`);
             setTimeout(() => {
                 location.reload();
             }, 2500);
@@ -200,7 +193,7 @@ function startGame() {
     const numOfCards = parseInt(numOfCardsInput.value);
 
     if (isNaN(numOfCards) || numOfCards < 4 || numOfCards % 2 !== 0) {
-        Notiflix.Notify.failure("Please enter a valid even number (minimum 4)");
+        showNotification('failure', 'Please enter a valid even number (minimum 4)');
         return;
     }
     gridSize = numOfCards;

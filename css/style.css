@@ -157,6 +157,7 @@ button#start-game:hover {
     }
 }
 
+
 /* Desktop view */
 @media (min-width: 992px) {
     #game-board {
@@ -173,24 +174,27 @@ button#start-game:hover {
     h1{
         text-align: center;
     }
+
     .dancing-card {
         display: none;
     }
+
     .titleName{
         font-size: 30px;
     }
+
     p{
         font-size: 10px;
     }
-        #discard-pile {
-            position: fixed;
-            right: 10px;
-            bottom: 600px;
-            width: 50px;
-            height: 100px;
-            perspective: 500px;
+
+    #discard-pile {
+        position: fixed;
+        right: 10px;
+        bottom: 600px;
+        width: 50px;
+        height: 100px;
+        perspective: 500px;
         }
-    
 }
 
 /* Mobile view */
@@ -200,4 +204,31 @@ button#start-game:hover {
         padding: 0 10px;
     }
 
+}
+
+.notiflix-notify-container {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@media (min-width: 768px) {
+    .notiflix-notify-container {
+        justify-content: flex-end;
+        padding-right: 10px;
+    }
+}
+
+.notiflix-notify-wrapper {
+    margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+    .notiflix-notify-wrapper {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
 }
