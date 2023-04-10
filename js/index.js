@@ -1,3 +1,19 @@
+function updateNotiflixPosition() {
+  const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+  if (screenWidth < 768) {
+    Notiflix.Notify.init({
+      position: 'top-center',
+    });
+  } else {
+    Notiflix.Notify.init({
+      position: 'right-bottom', // or any other position you prefer for larger screens
+    });
+  }
+}
+
+updateNotiflixPosition();
+window.addEventListener('resize', updateNotiflixPosition);
 
 const gameBoard = document.getElementById("game-board");
 const startGameButton = document.getElementById("start-game");
