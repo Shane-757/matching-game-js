@@ -10,7 +10,7 @@ body {
         background-color: #08661c;
     font-family: cursive;
     font-weight: 400;
-    color: rgb(8, 8, 8)
+    color: rgb(255, 0, 0)
     }
 
 .title{
@@ -24,7 +24,7 @@ body {
 
 .titleName{
     font-size: 50px;
-    color: rgb(8, 8, 8);
+    color: rgb(184, 17, 17);
     text-shadow: 2px 2px 2px #000000;
     text-align: center;
     margin-top: 10px;
@@ -36,11 +36,16 @@ h1 {
     margin-bottom: 1rem;
 }
 h2 { 
-    margin : 0 auto;}
+    margin : 0 auto;
+    color: #000000;
+}
+
 
 p {
     margin: 0 0 20px 0;
-    text-align: center;}
+    text-align: center;
+    color: #000000;
+}
 
 #game-container {
     display: flex;
@@ -117,7 +122,7 @@ button#start-game:hover {
 
 .dancing-card img {
     width: 300px;
-    height: auto;
+    height: 200px;
 }
 
 #discard-pile {
@@ -168,6 +173,24 @@ button#start-game:hover {
     h1{
         text-align: center;
     }
+    .dancing-card {
+        display: none;
+    }
+    .titleName{
+        font-size: 30px;
+    }
+    p{
+        font-size: 10px;
+    }
+        #discard-pile {
+            position: fixed;
+            right: 10px;
+            bottom: 600px;
+            width: 50px;
+            height: 100px;
+            perspective: 500px;
+        }
+    
 }
 
 /* Mobile view */
