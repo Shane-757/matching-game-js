@@ -182,8 +182,8 @@ function startGame() {
     const numOfCardsInput = document.getElementById("numOfCards");
     const numOfCards = parseInt(numOfCardsInput.value);
 
-    if (isNaN(numOfCards) || numOfCards < 4 || numOfCards > 50 || numOfCards % 2 !== 0) {
-        Notiflix.Notify.failure('Please enter a valid even number between 4 and 50');
+    if (isNaN(numOfCards) || numOfCards < 4 || numOfCards % 2 !== 0) {
+        Notiflix.Notify.failure('Please enter a valid even number (minimum 4)');
         return;
     }
     gridSize = numOfCards;
